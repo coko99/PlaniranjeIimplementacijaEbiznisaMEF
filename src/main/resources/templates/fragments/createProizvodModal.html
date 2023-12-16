@@ -1,0 +1,22 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="createProizvodModal" id="createProizvodModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCreateProizvodModal()">&times;</span>
+        <h2>Create Proizvod</h2>
+
+        <!-- For demonstration purposes, a simple form is shown -->
+        <form th:action="@{/proizvodi/create-proizvod}" method="post" class="proizvod-form" th:object="${proizvod}">
+            <label for="naziv">Naziv:</label>
+            <input type="text" id="naziv" name="naziv" th:field="*{naziv}" required>
+            <label for="cena">Cena:</label>
+            <input type="text" id="cena" name="cena" th:field="*{cena}" required>
+            <label for="opis">Opis:</label>
+            <input type="text" id="opis" name="opis" th:field="*{opis}">
+            <label for="sifra">Sifra:</label>
+            <input type="text" id="sifra" name="sifra" th:field="*{sifra}" required>
+            <input type="submit" value="Kreiraj">
+        </form>
+    </div>
+</div>
+</html>

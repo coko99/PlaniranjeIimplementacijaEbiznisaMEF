@@ -1,0 +1,76 @@
+<!-- src/main/resources/templates/createRacun.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Racun</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div th:replace="fragments/navigation :: navigation"></div>
+<div class="main">
+    <h2>Kreiranje racuna</h2>
+
+<!-- Thymeleaf form handling with POST method -->
+<form th:action="@{/racuni/create-racun}" method="post" th:object="${racun}">
+
+    <label for="korisnik">Korisnik:</label>
+    <select id="korisnik" name="korisnik" th:field="*{korisnik}">
+        <option th:each="korisnik : ${korisnici}" th:value="${korisnik.id}" th:text="${korisnik.ime}"></option>
+    </select>
+    <br>
+
+    <!-- Proizvod grid for multiple selection -->
+    <div class="proizvod-grid" id="proizvodGrid">
+        <div th:each="proizvod : ${proizvodi}" class="proizvod-item" th:attr="data-proizvodId=${proizvod.id}">
+            <input type="checkbox" th:price="${proizvod.cena}" id="proizvod" name="proizvodi"
+                   th:value="${proizvod.id}" th:text="${proizvod.naziv}"
+                   th:checked="${racun.proizvodi != null and racun.proizvodi.contains(proizvod)}" >
+            <span th:text="|${proizvod.naziv} (${proizvod.cena} RSD)|"></span>
+        </div>
+    </div>
+    <br/>
+    <!-- Other fields go here -->
+    <div id="selected-proizvod-sum"></div>
+
+
+    <input type="submit" value="Kreiraj racun">
+</form>
+</div>
+<script th:inline="javascript">
+    var proizvodItems = document.querySelectorAll('.proizvod-item');
+    var sumDisplay = document.getElementById('selected-proizvod-sum');
+
+    proizvodItems.forEach(function(item) {
+        item.addEventListener('click', toggleCheckbox);
+    });
+
+    function toggleCheckbox(event) {
+        var checkbox = event.currentTarget.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+
+        // Trigger change event to update the sum
+        var changeEvent = new Event('change', { bubbles: true });
+        checkbox.dispatchEvent(changeEvent);
+    }
+
+    var proizvodCheckboxes = document.querySelectorAll('input[name="proizvodi"]');
+    proizvodCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', updateSum);
+    });
+
+    function updateSum() {
+        var sum = 0;
+        proizvodCheckboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                // Extract the price from the checkbox text
+                var price = parseInt(checkbox.getAttribute('price'));
+                sum += price;
+            }
+        });
+
+        // Display the sum
+        sumDisplay.textContent = 'Selected Proizvod Sum: ' + sum + ' RSD';
+    }
+</script>
+</body>
+</html>

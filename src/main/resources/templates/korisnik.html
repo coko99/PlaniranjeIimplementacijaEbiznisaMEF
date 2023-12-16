@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Korisnici List</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Include modal styles for demonstration purposes -->
+</head>
+<body>
+<div th:replace="fragments/navigation :: navigation"></div>
+
+<h2>Korisnici List</h2>
+
+<!-- Add a button to open the modal for creating Korisnik -->
+<button onclick="openCreateKorisnikModal()">Create Korisnik</button>
+
+<!-- Include the createKorisnikModal fragment -->
+<div th:replace="fragments/createKorisnikModal :: createKorisnikModal"></div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Ime</th>
+        <th>PIB</th>
+        <th>MBR</th>
+        <th>Adresa</th>
+        <th>Mail Adresa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate over the list of Korisnik -->
+    <tr th:each="korisnik : ${korisnici}">
+        <td th:text="${korisnik.id}"></td>
+        <td th:text="${korisnik.ime}"></td>
+        <td th:text="${korisnik.pib}"></td>
+        <td th:text="${korisnik.mbr}"></td>
+        <td th:text="${korisnik.adresa}"></td>
+        <td th:text="${korisnik.mailAdresa}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function openCreateKorisnikModal() {
+        document.getElementById('createKorisnikModal').style.display = 'block';
+    }
+    function closeCreateKorisnikModal() {
+      document.getElementById('createKorisnikModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>

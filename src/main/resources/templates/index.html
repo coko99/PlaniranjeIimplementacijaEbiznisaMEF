@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Racuni List</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div th:replace="fragments/navigation :: navigation"></div>
+
+<div class="main">
+    <h2>Racuni List</h2>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Datetime</th>
+            <th>Broj Racuna</th>
+            <th>Proizvodi</th>
+            <th>Cena</th>
+            <th>Korisnik</th>
+            <th>Opcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over the list of Racuni -->
+        <tr th:each="racun : ${racuni}">
+            <td th:text="${racun.id}"></td>
+            <td th:text="${racun.datetime}"></td>
+            <td th:text="${racun.brojRacuna}"></td>
+            <td>
+
+                <div th:each="proizvod : ${racun.proizvodi}">
+                    <!-- Link to Proizvod details page -->
+                    <a th:href="@{/proizvod/{id}(id=${proizvod.id})}" th:text="${proizvod.naziv}"></a>
+                    <br/>
+                </div>
+            </td>
+            <td th:text="${#aggregates.sum(racun.proizvodi.![cena])}"></td></td>
+            <td>
+                <!-- Link to Korisnik details page -->
+                <a th:href="@{/korisnik/{id}(id=${racun.korisnik.id})}" th:text="${racun.korisnik.ime}"></a>
+            </td>
+            <td>
+                <!-- Button to print Racun to PDF -->
+                <form th:action="@{/racuni/print-pdf}" method="post" style="display:inline;">
+                    <input type="hidden" name="racunId" th:value="${racun.id}">
+                    <button type="submit">Print to PDF</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

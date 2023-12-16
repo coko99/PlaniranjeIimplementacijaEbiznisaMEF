@@ -1,0 +1,23 @@
+<!-- fragments/createKorisnikModal.html -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="createKorisnikModal" id="createKorisnikModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCreateKorisnikModal()">&times;</span>
+        <h2>Create Korisnik</h2>
+        <form th:action="@{/korisnik/create}" method="post" class="korisnik-form" th:object="${korisnik}">
+            <label for="ime">Ime:</label>
+            <input type="text" id="ime" name="ime" th:field="*{ime}" required>
+            <label for="pib">PIB:</label>
+            <input type="text" id="pib" name="pib" th:field="*{pib}" required>
+            <label for="mbr">MBR:</label>
+            <input type="text" id="mbr" name="mbr" th:field="*{mbr}" required>
+            <label for="adresa">Adresa:</label>
+            <input type="text" id="adresa" name="adresa" th:field="*{adresa}" required>
+            <label for="mailAdresa">Mail Adresa:</label>
+            <input type="email" id="mailAdresa" name="mailAdresa" th:field="*{mailAdresa}" required>
+            <input type="submit" value="Kreiraj">
+        </form>
+    </div>
+</div>
+</html>

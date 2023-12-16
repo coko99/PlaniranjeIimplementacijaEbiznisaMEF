@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Proizvodi List</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div th:replace="fragments/navigation :: navigation"></div>
+
+<h2>Proizvodi List</h2>
+<!-- Add a button to open the modal -->
+<button onclick="openCreateProizvodModal()">Kreiraj proizvod</button>
+
+<!-- Include the createProizvodModal fragment -->
+<div th:replace="fragments/createProizvodModal :: createProizvodModal"></div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Naziv</th>
+        <th>Cena</th>
+        <th>Opis</th>
+        <th>Sifra</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!-- Iterate over the list of Proizvod -->
+    <tr th:each="proizvod : ${proizvodi}">
+        <td th:text="${proizvod.id}"></td>
+        <td th:text="${proizvod.naziv}"></td>
+        <td th:text="${proizvod.cena}"></td>
+        <td th:text="${proizvod.opis}"></td>
+        <td th:text="${proizvod.sifra}"></td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    function openCreateProizvodModal() {
+        document.getElementById('createProizvodModal').style.display = 'block';
+    }
+    function closeCreateProizvodModal() {
+        document.getElementById('createProizvodModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>

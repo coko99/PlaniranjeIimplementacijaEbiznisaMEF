@@ -1,0 +1,24 @@
+<!-- resources/templates/invoice-template.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Invoice</title>
+</head>
+<body>
+<h2>Invoice</h2>
+
+<p th:text="'Invoice for Racun ID: ' + ${racun.id}"></p>
+<p th:text="'Datetime: ' + ${racun.datetime}"></p>
+<p th:text="'Broj Racuna: ' + ${racun.brojRacuna}"></p>
+
+<p>Proizvodi:</p>
+<ul>
+    <li th:each="proizvod : ${racun.proizvodi}" th:text="'- ' + ${proizvod.naziv} + ' - Cena: ' + ${proizvod.cena} + ' RSD'"></li>
+</ul>
+
+<p th:text="|Proizvodi Sum: ${#aggregates.sum(racun.proizvodi.![cena])}|"></p>
+<!--<p th:text="'Proizvodi Sum: ' + ${#numbers.formatDecimal(#aggregates.sum(racun.proizvodi.![cena])}, 2, 'COMMA', 2, 'POINT')} + ' RSD'"></p>-->
+<p th:text="'Korisnik: ' + ${racun.korisnik.ime}"></p>
+</body>
+</html>
